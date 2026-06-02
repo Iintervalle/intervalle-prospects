@@ -1,51 +1,50 @@
-
-// \u2500\u2500\u2500 CONFIGURATION \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ─── CONFIGURATION ────────────────────────────────────────────────────────────
 const SUPABASE_URL = 'https://krcfiibyfvbraqidgfwc.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtyY2ZpaWJ5ZnZicmFxaWRnZndjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1Mzk0MDksImV4cCI6MjA5NTExNTQwOX0.mILfPxHddtY3fslYusAZkfRSZ7-AROD4Gb4Mp59Km6g'; // \u2190 \u00c0 remplacer
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtyY2ZpaWJ5ZnZicmFxaWRnZndjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1Mzk0MDksImV4cCI6MjA5NTExNTQwOX0.mILfPxHddtY3fslYusAZkfRSZ7-AROD4Gb4Mp59Km6g'; // ← À remplacer
 
 // Edge Function Supabase qui fait le proxy Claude API
-// (\u00e0 cr\u00e9er dans Supabase \u2192 Edge Functions, voir instructions ci-dessous)
+// (à créer dans Supabase → Edge Functions, voir instructions ci-dessous)
 const CLAUDE_PROXY_URL = `${SUPABASE_URL}/functions/v1/chat-intervalle`;
 
-const SYSTEM_PROMPT = `Tu es l'assistant de L'Intervalle, une \u00e9cole de musiques actuelles \u00e0 Paris (rock, jazz, funk, hip-hop, bossa nova). Tu r\u00e9ponds aux visiteurs sur le site.
+const SYSTEM_PROMPT = `Tu es l'assistant de L'Intervalle, une école de musiques actuelles à Paris (rock, jazz, funk, hip-hop, bossa nova). Tu réponds aux visiteurs sur le site.
 
-Ton r\u00f4le : informer, rassurer, et amener naturellement les personnes int\u00e9ress\u00e9es \u00e0 r\u00e9server une s\u00e9ance de pr\u00e9sentation gratuite.
+Ton rôle : informer, rassurer, et amener naturellement les personnes intéressées à réserver une séance de présentation gratuite.
 
 TON ET STYLE
-- Chaleureux, d\u00e9contract\u00e9, direct \u2014 comme quelqu'un de l'\u00e9cole qui conna\u00eet bien les lieux
+- Chaleureux, décontracté, direct — comme quelqu'un de l'école qui connaît bien les lieux
 - Pas trop formel, pas trop familier
-- Tu utilises des emojis avec mod\u00e9ration (1-2 par message max)
-- Tes r\u00e9ponses sont courtes et claires \u2014 pas de pav\u00e9s de texte
+- Tu utilises des emojis avec modération (1-2 par message max)
+- Tes réponses sont courtes et claires — pas de pavés de texte
 - Tu tutoies les gens naturellement, sauf s'ils te vouvoient
 
-CE QUE TU SAIS SUR L'\u00c9COLE
-- Nom : L'Intervalle \u2014 112 rue du Chemin Vert, Paris
-- Email : ecole@lintervalle-studios.com \u2014 Instagram : @lintervalle_musique
-- Ambiance : \u00e9cole de musiques actuelles avec buvette, jams, sc\u00e8nes ouvertes
+CE QUE TU SAIS SUR L'ÉCOLE
+- Nom : L'Intervalle — 112 rue du Chemin Vert, Paris
+- Email : ecole@lintervalle-studios.com — Instagram : @lintervalle_musique
+- Ambiance : école de musiques actuelles avec buvette, jams, scènes ouvertes
 
 Les cours : collectifs, 1h/semaine, tous niveaux. Guitare, basse, batterie, piano/claviers, chant.
-Tarifs : 130 \u20ac/mois (guitare/basse/batterie/piano) \u2014 140 \u20ac/mois (chant). 5 \u00e9l\u00e8ves max (3 pour chant).
-Cours manqu\u00e9 = cours rattrap\u00e9. Ateliers gratuits inclus.
-Les cours s'adressent autant aux d\u00e9butants complets qu'aux musiciens exp\u00e9riment\u00e9s : ces derniers viennent souvent pour jouer en groupe, progresser sur un style pr\u00e9cis, ou trouver une communaut\u00e9 musicale. Le format collectif est justement riche pour les bons musiciens \u2014 on apprend aussi des autres.
+Tarifs : 130 €/mois (guitare/basse/batterie/piano) — 140 €/mois (chant). 5 élèves max (3 pour chant).
+Cours manqué = cours rattrapé. Ateliers gratuits inclus.
+Les cours s'adressent autant aux débutants complets qu'aux musiciens expérimentés : ces derniers viennent souvent pour jouer en groupe, progresser sur un style précis, ou trouver une communauté musicale. Le format collectif est justement riche pour les bons musiciens — on apprend aussi des autres.
 
-Parcours d'inscription : \u2460 S\u00e9ance de pr\u00e9sentation (gratuite) \u2461 Cours d'essai (gratuit) \u2462 Premier mois sans engagement \u2463 Inscription jusqu'\u00e0 fin juin.
-R\u00e9servation s\u00e9ance : https://koalendar.com/e/rdv-de-presentation-de-lecole-de-musique
+Parcours d'inscription : ① Séance de présentation (gratuite) ② Cours d'essai (gratuit) ③ Premier mois sans engagement ④ Inscription jusqu'à fin juin.
+Réservation séance : https://koalendar.com/e/rdv-de-presentation-de-lecole-de-musique
 
-Jams : 2+ par mois, P\u00e9niche Anako, Les Disquaires. Ouvert \u00e0 tous.
+Jams : 2+ par mois, Péniche Anako, Les Disquaires. Ouvert à tous.
 
 CE QUE TU NE FAIS PAS
-- Tu ne cr\u00e9es pas d'inscription, tu ne donnes pas de cr\u00e9neaux pr\u00e9cis
-- Tu n'inventes pas d'infos manquantes \u2014 tu dis que l'\u00e9quipe pourra r\u00e9pondre
-- Pour une aide humaine : "Je vais transmettre \u00e7a \u00e0 l'\u00e9quipe. Tu peux aussi les joindre \u00e0 ecole@lintervalle-studios.com "`;
+- Tu ne crées pas d'inscription, tu ne donnes pas de créneaux précis
+- Tu n'inventes pas d'infos manquantes — tu dis que l'équipe pourra répondre
+- Pour une aide humaine : "Je vais transmettre ça à l'équipe. Tu peux aussi les joindre à ecole@lintervalle-studios.com "`;
 
-// \u2500\u2500\u2500 SESSION & \u00c9TAT \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ─── SESSION & ÉTAT ───────────────────────────────────────────────────────────
 const SESSION_ID = 'web_' + Math.random().toString(36).slice(2, 11);
 let isOpen = false;
 let firstOpen = true;
 let isLoading = false;
-const localHistory = []; // historique en m\u00e9moire pour le contexte Claude
+const localHistory = []; // historique en mémoire pour le contexte Claude
 
-// \u2500\u2500\u2500 SUPABASE : SAUVEGARDER UN MESSAGE \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ─── SUPABASE : SAUVEGARDER UN MESSAGE ───────────────────────────────────────
 async function saveMessage(role, contenu) {
   try {
     await fetch(`${SUPABASE_URL}/rest/v1/conversations_agent`, {
@@ -60,7 +59,7 @@ async function saveMessage(role, contenu) {
   } catch(e) { /* silencieux */ }
 }
 
-// \u2500\u2500\u2500 SUPABASE : LIRE L'HISTORIQUE \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ─── SUPABASE : LIRE L'HISTORIQUE ────────────────────────────────────────────
 async function getHistory() {
   try {
     const res = await fetch(
@@ -72,9 +71,9 @@ async function getHistory() {
   } catch(e) { return []; }
 }
 
-// \u2500\u2500\u2500 APPEL CLAUDE API (via Edge Function) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ─── APPEL CLAUDE API (via Edge Function) ────────────────────────────────────
 async function callClaude(userText) {
-  // On utilise l'historique local (fiable, sans d\u00e9lai Supabase)
+  // On utilise l'historique local (fiable, sans délai Supabase)
   localHistory.push({ role: 'user', content: userText });
 
   const res = await fetch(CLAUDE_PROXY_URL, {
@@ -98,7 +97,7 @@ async function callClaude(userText) {
   return reply;
 }
 
-// \u2500\u2500\u2500 UI \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ─── UI ───────────────────────────────────────────────────────────────────────
 const messagesEl = document.getElementById('chatMessages');
 const input = document.getElementById('chatInput');
 const sendBtn = document.getElementById('sendBtn');
@@ -172,7 +171,7 @@ async function sendMessage(text) {
     await saveMessage('assistant', reply);
   } catch(e) {
     removeTyping();
-    addMessage("D\u00e9sol\u00e9, une erreur est survenue. Tu peux nous \u00e9crire directement \u00e0 ecole@lintervalle-studios.com ", 'bot');
+    addMessage("Désolé, une erreur est survenue. Tu peux nous écrire directement à ecole@lintervalle-studios.com ", 'bot');
   }
 
   isLoading = false;
@@ -196,7 +195,7 @@ function toggleChat() {
       showTyping();
       await new Promise(r => setTimeout(r, 700));
       removeTyping();
-      const welcome = "Bonjour  Bienvenue \u00e0 L'Intervalle ! Je peux t'aider sur les cours, les jams, les studios ou autre chose. C'est quoi ta question ?";
+      const welcome = "Bonjour  Bienvenue à L'Intervalle ! Je peux t'aider sur les cours, les jams, les studios ou autre chose. C'est quoi ta question ?";
       addMessage(welcome, 'bot');
       localHistory.push({ role: 'assistant', content: welcome });
       await saveMessage('assistant', welcome);
@@ -204,7 +203,7 @@ function toggleChat() {
   }
 }
 
-// Ouverture automatique apr\u00e8s 8 secondes (desktop uniquement)
+// Ouverture automatique après 8 secondes (desktop uniquement)
 if (window.innerWidth > 768) {
   setTimeout(() => {
     if (!isOpen) toggleChat();
